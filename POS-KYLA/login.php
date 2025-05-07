@@ -83,9 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="login-container">
         <div class="login-form">
             <div class="login-header">
-                <div class="login-logo">
-                    <img src="styles/logo.svg" alt="POS System Logo" width="80" height="80">
-                </div>
+                
                 <h1 class="login-title">Restaurant POS</h1>
                 <p class="login-subtitle">Sign in to continue to your dashboard</p>
             </div>
@@ -115,17 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" class="btn btn-secondary w-100 mb-3">Sign In</button>
             </form>
             
-            <div class="mt-4 text-center">
-                <p class="text-muted mb-0" style="font-size: 0.85rem;">Default login credentials</p>
-                <div class="d-flex justify-content-center mt-2">
-                    <div class="me-4">
-                        <span class="badge bg-primary mb-1">Admin</span><br>
-                        <small>admin / admin123</small>
-                    </div>
-                    <div>
-                        <span class="badge bg-info mb-1">Cashier</span><br>
-                        <small>cashier / cashier123</small>
-                    </div>
+            
                 </div>
             </div>
         </div>
