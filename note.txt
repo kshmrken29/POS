@@ -1,0 +1,29 @@
+in this php file create a simple connecxtion xampp db and create tables and atteributes php
+
+in this restaurant pos, in my admin side, inside the menu maangement folder, create a:
+
+1. input daily menu
+	input fields:
+		-menu name
+		-approximate cost
+		-approximate number of servings
+		-price per serve
+		-expected sales=number of servings * price per serve
+	save this data to the database
+
+2. edit menu details
+	allow admin to sselect an existing menu item and update any of the details
+3. monitor menu sales
+	allow the admin to:
+		select and view individual menu items including number of servings sold.
+		view all menus in one table showing
+			menu name
+			servings available
+			servings sold
+			sales per menu
+4. sales reporting
+	display
+		total sales per menu(calculated from actual sales)
+		overall daily sales(sum of all menu sales)
+5. manage cashier
+	manage crud
