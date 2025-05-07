@@ -1,0 +1,91 @@
+in this php file create a simple connecxtion xampp db and create tables and atteributes php
+
+in this restaurant pos, in my admin side, inside the menu maangement folder, create a:
+ADMIN SIDE
+A. MENU MANAGEMENT
+1. input daily menu
+	input fields:
+		-menu name
+		-approximate cost
+		-approximate number of servings
+		-price per serve
+		-expected sales=number of servings * price per serve
+	save this data to the database
+
+2. edit menu details
+	allow admin to sselect an existing menu item and update any of the details
+3. monitor menu sales
+	allow the admin to:
+		select and view individual menu items including number of servings sold.
+		view all menus in one table showing
+			menu name
+			servings available
+			servings sold
+			sales per menu
+4. sales reporting
+	display
+		total sales per menu(calculated from actual sales)
+		overall daily sales(sum of all menu sales)
+5. manage cashier
+	manage crud
+
+
+B. Inventory maangement
+
+1. Input Purchase Details
+	Input fields:
+		-Item Name
+		-Quantity Purchased
+		-Total Purchase price
+		-Date Purchased
+
+2. Input Daily Usage
+	Daily input for each item used:
+		-Item Name
+		-Quantity used
+		-Date used
+
+3. Remaining Stock view
+	FOr each interntory item, calculate:
+		-	Remaining Stock = Total Purchased - Total used
+	
+	Display current Inventory levels for all items.
+
+
+
+CASHIER SIDE
+
+1. Take Customer Order
+	Display all menu items with available servings.
+	Select items being Purchased
+	Automatically reduce the number of servings available based on the Order
+
+2. Total Amount Calculation
+	Automatically calculate the total cost of selected items
+
+3. Accept Payment
+	Input field: Amount paid by Customer
+
+4. Display change
+	Calculate and display:
+				Change = Amount Paid - Total Purchase Amount
+
+5. Save Transaction
+	Save each transaction with:
+		-Date and time
+		-Menu items Purchased
+		-Quantity per item
+		-Total Paid
+		-Change given
+
+6. Void Transaction
+	Through admin account e.g. cancelation or deletion
+
+
+
+Development Guidelines
+	Use modular code: separate menu, inventorym and transaction logic.
+	Implement basic error checks (e.g. insufficient payment, stock limits).
+	Use Persisten storage(database msqyl)
+	Optionally, implemnent a login screen for Admin vs Cashier access.
+	Provide simple reports/export (e.g. daily sales in texte or CSV)
