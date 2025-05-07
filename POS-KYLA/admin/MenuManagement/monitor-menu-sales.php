@@ -34,7 +34,7 @@
       <div class="collapse navbar-collapse" id="adminNavbar">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="./index.php">Dashboard</a>
+            <a class="nav-link" href="../index.php">Dashboard</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="input-daily-menu.php">Input Daily Menu</a>

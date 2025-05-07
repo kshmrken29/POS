@@ -1,29 +1,11 @@
-// Main JavaScript file for Restaurant POS System
+// Main JavaScript file for Restaurant POS System - Simplified
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Show loading spinner for all form submissions
+  // Show loading message for all form submissions
   const forms = document.querySelectorAll('form');
   forms.forEach(form => {
     form.addEventListener('submit', function() {
-      showLoadingSpinner();
-    });
-  });
-  
-  // Initialize tooltips
-  if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-  }
-  
-  // Confirmation dialogs for delete/void actions
-  const confirmButtons = document.querySelectorAll('.btn-confirm-action');
-  confirmButtons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      if (!confirm(this.getAttribute('data-confirm-message') || 'Are you sure you want to proceed with this action?')) {
-        e.preventDefault();
-      }
+      showLoadingMessage();
     });
   });
   
@@ -39,6 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }, false);
   });
   
+  // Confirmation dialogs for delete/void actions
+  const confirmButtons = document.querySelectorAll('.btn-confirm-action');
+  confirmButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      if (!confirm(this.getAttribute('data-confirm-message') || 'Are you sure you want to proceed with this action?')) {
+        e.preventDefault();
+      }
+    });
+  });
+  
   // Toggle password visibility
   const passwordToggles = document.querySelectorAll('.password-toggle');
   passwordToggles.forEach(toggle => {
@@ -47,33 +39,33 @@ document.addEventListener('DOMContentLoaded', function() {
       if (inputField) {
         if (inputField.type === 'password') {
           inputField.type = 'text';
-          this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+          this.textContent = 'Hide Password';
         } else {
           inputField.type = 'password';
-          this.innerHTML = '<i class="bi bi-eye"></i>';
+          this.textContent = 'Show Password';
         }
       }
     });
   });
 });
 
-// Show loading spinner
-function showLoadingSpinner() {
-  const spinner = document.createElement('div');
-  spinner.className = 'spinner-overlay';
-  spinner.innerHTML = `
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
+// Show loading message
+function showLoadingMessage() {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'loading-message';
+  messageDiv.innerHTML = `
+    <div class="spinner-overlay">
+      <div>Loading... Please wait</div>
     </div>
   `;
-  document.body.appendChild(spinner);
+  document.body.appendChild(messageDiv);
 }
 
-// Hide loading spinner
-function hideLoadingSpinner() {
-  const spinner = document.querySelector('.spinner-overlay');
-  if (spinner) {
-    spinner.remove();
+// Hide loading message
+function hideLoadingMessage() {
+  const messageDiv = document.querySelector('.loading-message');
+  if (messageDiv) {
+    messageDiv.remove();
   }
 }
 
@@ -142,7 +134,7 @@ function addToCart(itemId, itemName, price, maxQuantity) {
       <div class="text-end">
         <div class="item-total">${formatCurrency(total)}</div>
         <button type="button" class="btn btn-sm btn-link text-danger p-0 mt-1" onclick="removeFromCart('${itemId}')">
-          <i class="bi bi-trash"></i> Remove
+          Remove
         </button>
       </div>
     `;

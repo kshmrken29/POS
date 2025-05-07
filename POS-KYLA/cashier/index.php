@@ -53,12 +53,8 @@ log_activity('accessed cashier dashboard');
           <!-- User account dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-              <div class="user-info">
-                <div class="user-avatar">
-                  <?php echo strtoupper(substr($_SESSION['username'], 0, 1)); ?>
-                </div>
-                <span class="d-none d-sm-inline-block"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
-              </div>
+              <span class="d-none d-sm-inline-block"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            </a>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <?php if (is_admin()): ?>
