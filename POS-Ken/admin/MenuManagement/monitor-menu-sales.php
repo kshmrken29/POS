@@ -34,7 +34,7 @@
       <div class="collapse navbar-collapse" id="adminNavbar">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="./index.php">Dashboard</a>
+            <a class="nav-link" href="../index.php">Dashboard</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="input-daily-menu.php">Input Daily Menu</a>
@@ -110,7 +110,7 @@
                             <th>Servings Available</th>
                             <th>Servings Sold</th>
                             <th>Sales</th>
-                            <th>Progress</th>
+                            <th>Percentage</th>
                             <th>Action</th>
                         </tr>
                     </thead>

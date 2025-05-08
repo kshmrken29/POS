@@ -34,14 +34,6 @@
           <li class="nav-item">
             <a class="nav-link" href="index.php">Dashboard</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Menu Management</a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="MenuManagement/input-daily-menu.php">Input Daily Menu</a></li>
-              <li><a class="dropdown-item" href="MenuManagement/edit-menu-details.php">Edit Menu Details</a></li>
-              <li><a class="dropdown-item" href="MenuManagement/monitor-menu-sales.php">Monitor Menu Sales</a></li>
-            </ul>
-          </li>
           <li class="nav-item">
             <a class="nav-link active" href="process-void-requests.php">Process Void Requests</a>
           </li>
@@ -89,7 +81,7 @@
                 }
                 
                 // Update transaction status
-                $update_transaction = "UPDATE transactions SET status = 'voided' WHERE id = $transaction_id";
+                $update_transaction = "UPDATE transactions SET status = 'voided', void_processed = TRUE WHERE id = $transaction_id";
                 
                 if (!mysqli_query($conn, $update_transaction)) {
                     throw new Exception("Error updating transaction: " . mysqli_error($conn));
@@ -115,8 +107,8 @@
         } else if (isset($_POST['reject_void'])) {
             $transaction_id = $_POST['transaction_id'];
             
-            // Update transaction status back to completed
-            $update_sql = "UPDATE transactions SET status = 'completed' WHERE id = $transaction_id";
+            // Update transaction status back to completed and mark as processed
+            $update_sql = "UPDATE transactions SET status = 'completed', void_processed = TRUE WHERE id = $transaction_id";
             
             if (mysqli_query($conn, $update_sql)) {
                 echo '<div class="alert alert-info">
@@ -132,11 +124,11 @@
         }
     }
     
-    // Get pending void requests
+    // Get pending void requests - only show unprocessed void requests
     $sql = "SELECT t.*, COUNT(ti.id) as item_count, SUM(ti.subtotal) as total_value
             FROM transactions t
             LEFT JOIN transaction_items ti ON t.id = ti.transaction_id
-            WHERE t.status = 'void_requested'
+            WHERE t.status = 'void_requested' AND (t.void_processed IS NULL OR t.void_processed = FALSE)
             GROUP BY t.id
             ORDER BY t.transaction_date DESC";
             

@@ -70,7 +70,7 @@
         $reason = $_POST['void_reason'];
         
         // Update transaction status to 'void_requested'
-        $sql = "UPDATE transactions SET status = 'void_requested' WHERE id = $transaction_id";
+        $sql = "UPDATE transactions SET status = 'void_requested', void_processed = FALSE WHERE id = $transaction_id";
         
         if (mysqli_query($conn, $sql)) {
             // Add void reason to a separate table or log for admin review
@@ -90,7 +90,7 @@
     $sql = "SELECT t.*, COUNT(ti.id) as item_count 
             FROM transactions t
             LEFT JOIN transaction_items ti ON t.id = ti.transaction_id
-            WHERE t.status = 'completed'
+            WHERE t.status = 'completed' AND (t.void_processed IS NULL OR t.void_processed = FALSE)
             GROUP BY t.id
             ORDER BY t.transaction_date DESC
             LIMIT 20";

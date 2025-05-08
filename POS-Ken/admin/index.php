@@ -77,10 +77,7 @@ include 'connection.php';
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sales-reporting.php">Sales Reporting</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="manage-cashier.php">Manage Cashier</a>
+            <a class="nav-link" href="process-void-requests.php">Void Requests</a>
           </li>
           <!-- User account dropdown -->
           <li class="nav-item dropdown">
@@ -198,9 +195,7 @@ include 'connection.php';
         </div>
       </div>
       
-      <div class="col-12 mt-3 text-center">
-        <a href="InventoryManagement/setup_tables.php" class="btn btn-outline-primary">Setup Inventory Tables</a>
-      </div>
+    
       
       <!-- Additional features -->
       <div class="col-12 mt-5">

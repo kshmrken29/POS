@@ -144,11 +144,7 @@ log_activity('accessed cashier dashboard');
       </div>
     </div>
     
-    <div class="row mt-4">
-      <div class="col-12 text-center">
-        <a href="setup_tables.php" class="btn btn-outline-secondary">Setup Database Tables</a>
-      </div>
-    </div>
+   
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
