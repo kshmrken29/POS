@@ -1,80 +1,21 @@
-<?php
-// Include authentication system
-require_once '../auth_session.php';
-require_admin();
-
-// Log that admin dashboard was accessed
-log_activity('accessed admin dashboard');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Remaining Stock View</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     body {
       background-color: #f8f9fa;
     }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-      padding: 48px 0 0;
-      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-      background-color: #212529;
-    }
-    .sidebar-sticky {
-      height: calc(100vh - 48px);
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-    .sidebar .nav-link {
+    .nav-link {
       font-weight: 500;
-      color: #adb5bd;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.25rem;
-    }
-    .sidebar .nav-link:hover {
-      color: #fff;
-    }
-    .sidebar .nav-link.active {
-      color: #fff;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-left: 4px solid #0d6efd;
-    }
-    .sidebar .nav-link .bi {
-      margin-right: 0.5rem;
-    }
-    .sidebar-heading {
-      font-size: .75rem;
-      text-transform: uppercase;
-      padding: 1rem;
-      color: #6c757d;
     }
     .navbar-brand {
-      padding: 1rem;
       font-weight: bold;
-      color: white;
-      text-align: center;
-      display: block;
     }
-    .main-content {
-      margin-left: 300px;
-      padding: 20px;
-    }
-    @media (max-width: 767.98px) {
-      .sidebar {
-        width: 100%;
-        position: relative;
-        padding-top: 0;
-      }
-      .main-content {
-        margin-left: 0;
-      }
+    .container {
+      margin-top: 50px;
     }
     .low-stock {
       background-color: #ffcccc;
@@ -83,76 +24,33 @@ log_activity('accessed admin dashboard');
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar col-md-3 col-lg-2 d-md-block bg-dark">
-    <div class="position-sticky sidebar-sticky">
-      <a href="../dashboard.php" class="navbar-brand">Restaurant POS - Admin</a>
-      <hr class="bg-light">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="../dashboard.php">
-            <i class="bi bi-speedometer2"></i> Dashboard
-          </a>
-        </li>
-        <li class="sidebar-heading">Menu Management</li>
-        <li class="nav-item">
-          <a class="nav-link" href="../MenuManagement/input-daily-menu.php">
-            <i class="bi bi-plus-circle"></i> Input Daily Menu
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../MenuManagement/edit-menu-details.php">
-            <i class="bi bi-pencil-square"></i> Edit Menu Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../MenuManagement/monitor-menu-sales.php">
-            <i class="bi bi-graph-up"></i> Monitor Menu Sales
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../MenuManagement/sales-reporting.php">
-            <i class="bi bi-file-earmark-bar-graph"></i> Sales Reporting
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../MenuManagement/manage-cashier.php">
-            <i class="bi bi-person-badge"></i> Manage Cashier
-          </a>
-        </li>
-        <li class="sidebar-heading">Inventory</li>
-        <li class="nav-item">
-          <a class="nav-link" href="input-purchase-details.php">
-            <i class="bi bi-cart-plus"></i> Purchase Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="input-daily-usage.php">
-            <i class="bi bi-card-checklist"></i> Daily Usage
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="remaining-stock-view.php">
-            <i class="bi bi-boxes"></i> Remaining Stock
-          </a>
-        </li>
-        <li class="sidebar-heading">Administration</li>
-        <li class="nav-item">
-          <a class="nav-link" href="../process-void-requests.php">
-            <i class="bi bi-exclamation-triangle"></i> Void Requests
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Restaurant POS - Admin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <!-- Main content -->
-  <div class="main-content">
+      <div class="collapse navbar-collapse" id="adminNavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.php">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="input-purchase-details.php">Input Purchase Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="input-daily-usage.php">Input Daily Usage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="remaining-stock-view.php">Remaining Stock View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
     <h2 class="mb-4">Remaining Stock View</h2>
 
     <?php
@@ -240,6 +138,7 @@ log_activity('accessed admin dashboard');
                   <th>Description</th>
                   <th>Current Stock</th>
                   <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -283,6 +182,11 @@ log_activity('accessed admin dashboard');
                   }
                   echo "</td>";
                   
+                  // Add action column
+                  echo "<td>";
+                  echo "<button class='btn btn-sm btn-info view-menu-items' data-bs-toggle='modal' data-bs-target='#menuItemsModal' data-item-id='" . $item['id'] . "' data-item-name='" . $item['item_name'] . "'>View Menu Items</button>";
+                  echo "</td>";
+                  
                   echo "</tr>";
                 }
                 
@@ -304,6 +208,46 @@ log_activity('accessed admin dashboard');
               </div>
               <div>
                 <span class="badge bg-success">&nbsp;</span> In Stock
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal for Menu Items that use this inventory item -->
+          <div class="modal fade" id="menuItemsModal" tabindex="-1" aria-labelledby="menuItemsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="menuItemsModalLabel">Menu Items Using <span id="modalItemName"></span></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="text-center my-3" id="menuItemsLoading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                  <div id="menuItemsContent" style="display: none;">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Menu Name</th>
+                          <th>Quantity Per Serving</th>
+                          <th>Servings Available</th>
+                          <th>Servings Sold</th>
+                          <th>Total Used</th>
+                        </tr>
+                      </thead>
+                      <tbody id="menuItemsTableBody">
+                      </tbody>
+                    </table>
+                  </div>
+                  <div id="noMenuItemsMessage" style="display: none;">
+                    <div class="alert alert-info">No menu items are using this inventory item.</div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
               </div>
             </div>
           </div>
@@ -430,8 +374,68 @@ log_activity('accessed admin dashboard');
         <?php endif; ?>
       </div>
     </div>
-  </div> <!-- End of main-content -->
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // JavaScript to fetch and display menu items using a specific inventory item
+    document.querySelectorAll('.view-menu-items').forEach(button => {
+      button.addEventListener('click', function() {
+        const itemId = this.getAttribute('data-item-id');
+        const itemName = this.getAttribute('data-item-name');
+        
+        // Update modal title
+        document.getElementById('modalItemName').textContent = itemName;
+        
+        // Show loading indicator
+        document.getElementById('menuItemsLoading').style.display = 'block';
+        document.getElementById('menuItemsContent').style.display = 'none';
+        document.getElementById('noMenuItemsMessage').style.display = 'none';
+        
+        // Fetch menu items data
+        fetch(`get-menu-items.php?inventory_item_id=${itemId}`)
+          .then(response => response.json())
+          .then(data => {
+            setTimeout(() => {  // Added delay for UX
+              // Hide loading indicator
+              document.getElementById('menuItemsLoading').style.display = 'none';
+              
+              if (data.length > 0) {
+                // Show table
+                document.getElementById('menuItemsContent').style.display = 'block';
+                
+                // Clear previous data
+                const tableBody = document.getElementById('menuItemsTableBody');
+                tableBody.innerHTML = '';
+                
+                // Add new data
+                data.forEach(item => {
+                  const totalUsed = (item.quantity_per_serving * item.servings_sold).toFixed(2);
+                  const row = `
+                    <tr>
+                      <td>${item.menu_name}</td>
+                      <td>${item.quantity_per_serving}</td>
+                      <td>${item.number_of_servings}</td>
+                      <td>${item.servings_sold}</td>
+                      <td>${totalUsed}</td>
+                    </tr>
+                  `;
+                  tableBody.innerHTML += row;
+                });
+              } else {
+                // Show no items message
+                document.getElementById('noMenuItemsMessage').style.display = 'block';
+              }
+            }, 500);
+          })
+          .catch(error => {
+            console.error('Error fetching menu items:', error);
+            document.getElementById('menuItemsLoading').style.display = 'none';
+            document.getElementById('noMenuItemsMessage').style.display = 'block';
+            document.getElementById('noMenuItemsMessage').innerHTML = '<div class="alert alert-danger">Error loading menu items.</div>';
+          });
+      });
+    });
+  </script>
 </body>
 </html>

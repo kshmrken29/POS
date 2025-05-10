@@ -6,7 +6,7 @@ session_start();
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_type'])) {
     // Redirect based on user type
     if ($_SESSION['user_type'] == 'admin') {
-        header('Location: admin/index.php');
+        header('Location: admin/dashboard.php');
     } else {
         header('Location: cashier/index.php');
     }

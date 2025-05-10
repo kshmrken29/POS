@@ -45,7 +45,7 @@ session_start();
             <p>You are logged in as: <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong> (<?php echo $_SESSION['user_type']; ?>)</p>
             
             <?php if ($_SESSION['user_type'] == 'admin'): ?>
-                <a href="admin/index.php" class="btn btn-primary btn-back">Go to Admin Dashboard</a>
+                <a href="admin/dashboard.php" class="btn btn-primary btn-back">Go to Admin Dashboard</a>
             <?php elseif ($_SESSION['user_type'] == 'cashier'): ?>
                 <a href="cashier/index.php" class="btn btn-primary btn-back">Go to Cashier Dashboard</a>
             <?php endif; ?>

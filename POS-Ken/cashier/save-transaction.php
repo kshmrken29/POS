@@ -10,7 +10,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 // Check if data is valid
-if (!$data || !isset($data['total']) || !isset($data['amountPaid']) || !isset($data['change']) || !isset($data['items']) || empty($data['items'])) {
+if (!$data || !isset($data['total_amount']) || !isset($data['amount_paid']) || !isset($data['change_amount']) || !isset($data['items']) || empty($data['items'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid data received']);
     exit;
 }
@@ -20,12 +20,12 @@ mysqli_begin_transaction($conn);
 
 try {
     // Insert transaction record
-    $total = $data['total'];
-    $amountPaid = $data['amountPaid'];
-    $change = $data['change'];
+    $total = $data['total_amount'];
+    $amountPaid = $data['amount_paid'];
+    $change = $data['change_amount'];
     
-    $sql = "INSERT INTO transactions (total_amount, amount_paid, change_amount) 
-            VALUES ('$total', '$amountPaid', '$change')";
+    $sql = "INSERT INTO transactions (total_amount, amount_paid, change_amount, status) 
+            VALUES ('$total', '$amountPaid', '$change', 'completed')";
     
     if (!mysqli_query($conn, $sql)) {
         throw new Exception("Error saving transaction: " . mysqli_error($conn));
@@ -37,9 +37,9 @@ try {
     // Process each item in the order
     foreach ($data['items'] as $item) {
         $menu_item_id = $item['id'];
-        $quantity = $item['qty'];
+        $quantity = $item['quantity'];
         $price = $item['price'];
-        $subtotal = $item['subtotal'];
+        $subtotal = $price * $quantity;
         
         // Insert transaction item
         $sql = "INSERT INTO transaction_items (transaction_id, menu_item_id, quantity, price_per_item, subtotal) 

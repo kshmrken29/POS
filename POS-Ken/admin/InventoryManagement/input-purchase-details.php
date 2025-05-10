@@ -1,53 +1,155 @@
+<?php
+// Include authentication system
+require_once '../auth_session.php';
+require_admin();
+
+// Log that admin dashboard was accessed
+log_activity('accessed admin dashboard');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Input Purchase Details</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     body {
       background-color: #f8f9fa;
     }
-    .nav-link {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      padding: 48px 0 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      background-color: #212529;
+    }
+    .sidebar-sticky {
+      height: calc(100vh - 48px);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .sidebar .nav-link {
       font-weight: 500;
+      color: #adb5bd;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .sidebar .nav-link:hover {
+      color: #fff;
+    }
+    .sidebar .nav-link.active {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid #0d6efd;
+    }
+    .sidebar .nav-link .bi {
+      margin-right: 0.5rem;
+    }
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+      padding: 1rem;
+      color: #6c757d;
     }
     .navbar-brand {
+      padding: 1rem;
       font-weight: bold;
+      color: white;
+      text-align: center;
+      display: block;
     }
-    .container {
-      margin-top: 50px;
+    .main-content {
+      margin-left: 300px;
+      padding: 20px;
+    }
+    @media (max-width: 767.98px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        padding-top: 0;
+      }
+      .main-content {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Restaurant POS - Admin</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="adminNavbar">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../index.php">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="input-purchase-details.php">Input Purchase Details</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="input-daily-usage.php">Input Daily Usage</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="remaining-stock-view.php">Remaining Stock View</a>
-          </li>
-        </ul>
-      </div>
+  <!-- Sidebar -->
+  <div class="sidebar col-md-3 col-lg-2 d-md-block bg-dark">
+    <div class="position-sticky sidebar-sticky">
+      <a href="../dashboard.php" class="navbar-brand">Restaurant POS - Admin</a>
+      <hr class="bg-light">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="../dashboard.php">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+        <li class="sidebar-heading">Menu Management</li>
+        <li class="nav-item">
+          <a class="nav-link" href="../MenuManagement/input-daily-menu.php">
+            <i class="bi bi-plus-circle"></i> Input Daily Menu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../MenuManagement/edit-menu-details.php">
+            <i class="bi bi-pencil-square"></i> Edit Menu Details
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../MenuManagement/monitor-menu-sales.php">
+            <i class="bi bi-graph-up"></i> Monitor Menu Sales
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../MenuManagement/sales-reporting.php">
+            <i class="bi bi-file-earmark-bar-graph"></i> Sales Reporting
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../MenuManagement/manage-cashier.php">
+            <i class="bi bi-person-badge"></i> Manage Cashier
+          </a>
+        </li>
+        <li class="sidebar-heading">Inventory</li>
+        <li class="nav-item">
+          <a class="nav-link active" href="input-purchase-details.php">
+            <i class="bi bi-cart-plus"></i> Purchase Details
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="input-daily-usage.php">
+            <i class="bi bi-card-checklist"></i> Daily Usage
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="remaining-stock-view.php">
+            <i class="bi bi-boxes"></i> Remaining Stock
+          </a>
+        </li>
+        <li class="sidebar-heading">Administration</li>
+        <li class="nav-item">
+          <a class="nav-link" href="../process-void-requests.php">
+            <i class="bi bi-exclamation-triangle"></i> Void Requests
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../logout.php">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
 
-  <div class="container">
+  <!-- Main content -->
+  <div class="main-content">
     <h2 class="mb-4">Input Purchase Details</h2>
 
     <?php
@@ -73,8 +175,11 @@
             } else {
                 // Check if a new item is being added
                 if (isset($_POST['item_name']) && !empty($_POST['item_name'])) {
-                    $item_name = $_POST['item_name'];
-                    $description = $_POST['description'] ?? '';
+                    $item_name = mysqli_real_escape_string($conn, $_POST['item_name']);
+                    $description = mysqli_real_escape_string($conn, $_POST['description'] ?? '');
+                    $quantity = floatval($_POST['quantity']);
+                    $total_price = floatval($_POST['total_price']);
+                    $date_purchased = $_POST['date_purchased'];
 
                     // Check if item already exists
                     $check_sql = "SELECT id FROM inventory_items WHERE item_name = '$item_name'";
@@ -96,10 +201,54 @@
 
                     // Add purchase details
                     if (isset($item_id)) {
-                        $quantity = $_POST['quantity'];
-                        $total_price = $_POST['total_price'];
-                        $date_purchased = $_POST['date_purchased'];
+                        // Check if a similar purchase already exists on the same date
+                        $check_duplicate = "SELECT * FROM inventory_purchases 
+                                          WHERE item_id = $item_id 
+                                          AND quantity_purchased = $quantity 
+                                          AND date_purchased = '$date_purchased'";
+                        $duplicate_result = mysqli_query($conn, $check_duplicate);
+                        
+                        if (mysqli_num_rows($duplicate_result) > 0) {
+                            echo '<div class="alert alert-warning" role="alert">A similar purchase for this item with the same quantity already exists for the selected date. Please verify if this is a duplicate entry.</div>';
+                        } else {
+                            $purchase_sql = "INSERT INTO inventory_purchases (item_id, quantity_purchased, total_price, date_purchased) 
+                                            VALUES ($item_id, $quantity, $total_price, '$date_purchased')";
+                            
+                            if (mysqli_query($conn, $purchase_sql)) {
+                                echo '<div class="alert alert-success" role="alert">Purchase details added successfully!</div>';
+                                
+                                // Update current_stock in inventory_items
+                                $update_stock = "UPDATE inventory_items SET current_stock = current_stock + $quantity WHERE id = $item_id";
+                                mysqli_query($conn, $update_stock);
+                                
+                                // Clear form after successful submission
+                                echo '<script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        document.getElementById("new-purchase-form").reset();
+                                    });
+                                </script>';
+                            } else {
+                                echo '<div class="alert alert-danger" role="alert">Error adding purchase details: ' . mysqli_error($conn) . '</div>';
+                            }
+                        }
+                    }
+                } else if (isset($_POST['existing_item_id']) && !empty($_POST['existing_item_id'])) {
+                    // Add purchase details for existing item
+                    $item_id = $_POST['existing_item_id'];
+                    $quantity = floatval($_POST['quantity']);
+                    $total_price = floatval($_POST['total_price']);
+                    $date_purchased = $_POST['date_purchased'];
 
+                    // Check if a similar purchase already exists on the same date
+                    $check_duplicate = "SELECT * FROM inventory_purchases 
+                                      WHERE item_id = $item_id 
+                                      AND quantity_purchased = $quantity 
+                                      AND date_purchased = '$date_purchased'";
+                    $duplicate_result = mysqli_query($conn, $check_duplicate);
+                    
+                    if (mysqli_num_rows($duplicate_result) > 0) {
+                        echo '<div class="alert alert-warning" role="alert">A similar purchase for this item with the same quantity already exists for the selected date. Please verify if this is a duplicate entry.</div>';
+                    } else {
                         $purchase_sql = "INSERT INTO inventory_purchases (item_id, quantity_purchased, total_price, date_purchased) 
                                         VALUES ($item_id, $quantity, $total_price, '$date_purchased')";
                         
@@ -109,28 +258,16 @@
                             // Update current_stock in inventory_items
                             $update_stock = "UPDATE inventory_items SET current_stock = current_stock + $quantity WHERE id = $item_id";
                             mysqli_query($conn, $update_stock);
+                            
+                            // Clear form after successful submission
+                            echo '<script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    document.getElementById("existing-purchase-form").reset();
+                                });
+                            </script>';
                         } else {
                             echo '<div class="alert alert-danger" role="alert">Error adding purchase details: ' . mysqli_error($conn) . '</div>';
                         }
-                    }
-                } else if (isset($_POST['existing_item_id']) && !empty($_POST['existing_item_id'])) {
-                    // Add purchase details for existing item
-                    $item_id = $_POST['existing_item_id'];
-                    $quantity = $_POST['quantity'];
-                    $total_price = $_POST['total_price'];
-                    $date_purchased = $_POST['date_purchased'];
-
-                    $purchase_sql = "INSERT INTO inventory_purchases (item_id, quantity_purchased, total_price, date_purchased) 
-                                    VALUES ($item_id, $quantity, $total_price, '$date_purchased')";
-                    
-                    if (mysqli_query($conn, $purchase_sql)) {
-                        echo '<div class="alert alert-success" role="alert">Purchase details added successfully!</div>';
-                        
-                        // Update current_stock in inventory_items
-                        $update_stock = "UPDATE inventory_items SET current_stock = current_stock + $quantity WHERE id = $item_id";
-                        mysqli_query($conn, $update_stock);
-                    } else {
-                        echo '<div class="alert alert-danger" role="alert">Error adding purchase details: ' . mysqli_error($conn) . '</div>';
                     }
                 }
             }
@@ -172,7 +309,7 @@
             <!-- Existing Item Form -->
             <div class="tab-pane fade show active" id="existing" role="tabpanel">
               <?php if ($has_items): ?>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="existing-purchase-form">
                   <div class="mb-3">
                     <label for="existing_item_id" class="form-label">Select Item</label>
                     <select class="form-select" id="existing_item_id" name="existing_item_id" required>
@@ -197,7 +334,7 @@
                   <div class="mb-3">
                     <label for="total_price" class="form-label">Total Purchase Price</label>
                     <div class="input-group">
-                      <span class="input-group-text">$</span>
+                      <span class="input-group-text">₱</span>
                       <input type="number" class="form-control" id="total_price" name="total_price" step="0.01" required>
                     </div>
                   </div>
@@ -216,7 +353,7 @@
 
             <!-- New Item Form -->
             <div class="tab-pane fade" id="new" role="tabpanel">
-              <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+              <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="new-purchase-form">
                 <div class="mb-3">
                   <label for="item_name" class="form-label">Item Name</label>
                   <input type="text" class="form-control" id="item_name" name="item_name" required>
@@ -232,7 +369,7 @@
                 <div class="mb-3">
                   <label for="total_price" class="form-label">Total Purchase Price</label>
                   <div class="input-group">
-                    <span class="input-group-text">$</span>
+                    <span class="input-group-text">₱</span>
                     <input type="number" class="form-control" id="total_price" name="total_price" step="0.01" required>
                   </div>
                 </div>
@@ -297,7 +434,7 @@
                         echo "<tr>";
                         echo "<td>" . $row['item_name'] . "</td>";
                         echo "<td>" . $row['quantity_purchased'] . "</td>";
-                        echo "<td>$" . number_format($row['total_price'], 2) . "</td>";
+                        echo "<td>₱" . number_format($row['total_price'], 2) . "</td>";
                         echo "<td>" . $row['date_purchased'] . "</td>";
                         echo "</tr>";
                       }
@@ -319,7 +456,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> <!-- End of main-content -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

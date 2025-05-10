@@ -1,171 +1,48 @@
-<?php
-// Include authentication system
-require_once 'auth_session.php';
-require_admin();
-
-// Log that admin dashboard was accessed
-log_activity('accessed admin dashboard');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Process Void Requests</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     body {
       background-color: #f8f9fa;
     }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-      padding: 48px 0 0;
-      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-      background-color: #212529;
-    }
-    .sidebar-sticky {
-      height: calc(100vh - 48px);
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-    .sidebar .nav-link {
+    .nav-link {
       font-weight: 500;
-      color: #adb5bd;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.25rem;
-    }
-    .sidebar .nav-link:hover {
-      color: #fff;
-    }
-    .sidebar .nav-link.active {
-      color: #fff;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-left: 4px solid #0d6efd;
-    }
-    .sidebar .nav-link .bi {
-      margin-right: 0.5rem;
-    }
-    .sidebar-heading {
-      font-size: .75rem;
-      text-transform: uppercase;
-      padding: 1rem;
-      color: #6c757d;
     }
     .navbar-brand {
-      padding: 1rem;
       font-weight: bold;
-      color: white;
-      text-align: center;
-      display: block;
     }
-    .main-content {
-      margin-left: 300px;
-      padding: 20px;
-    }
-    @media (max-width: 767.98px) {
-      .sidebar {
-        width: 100%;
-        position: relative;
-        padding-top: 0;
-      }
-      .main-content {
-        margin-left: 0;
-      }
-    }
-    .feature-card {
-      transition: transform 0.3s ease;
-      margin-bottom: 20px;
-    }
-    .feature-card:hover {
-      transform: translateY(-5px);
-    }
-    .card-icon {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: #0d6efd;
-    }
-    .user-info {
-      color: white;
-      margin-right: 15px;
+    .container {
+      margin-top: 50px;
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar col-md-3 col-lg-2 d-md-block bg-dark">
-    <div class="position-sticky sidebar-sticky">
-      <a href="dashboard.php" class="navbar-brand">Restaurant POS - Admin</a>
-      <hr class="bg-light">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="dashboard.php">
-            <i class="bi bi-speedometer2"></i> Dashboard
-          </a>
-        </li>
-        <li class="sidebar-heading">Menu Management</li>
-        <li class="nav-item">
-          <a class="nav-link" href="MenuManagement/input-daily-menu.php">
-            <i class="bi bi-plus-circle"></i> Input Daily Menu
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="MenuManagement/edit-menu-details.php">
-            <i class="bi bi-pencil-square"></i> Edit Menu Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="MenuManagement/monitor-menu-sales.php">
-            <i class="bi bi-graph-up"></i> Monitor Menu Sales
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="MenuManagement/sales-reporting.php">
-            <i class="bi bi-file-earmark-bar-graph"></i> Sales Reporting
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="MenuManagement/manage-cashier.php">
-            <i class="bi bi-person-badge"></i> Manage Cashier
-          </a>
-        </li>
-        <li class="sidebar-heading">Inventory</li>
-        <li class="nav-item">
-          <a class="nav-link" href="InventoryManagement/input-purchase-details.php">
-            <i class="bi bi-cart-plus"></i> Purchase Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="InventoryManagement/input-daily-usage.php">
-            <i class="bi bi-card-checklist"></i> Daily Usage
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="InventoryManagement/remaining-stock-view.php">
-            <i class="bi bi-boxes"></i> Remaining Stock
-          </a>
-        </li>
-        <li class="sidebar-heading">Administration</li>
-        <li class="nav-item">
-          <a class="nav-link active" href="process-void-requests.php">
-            <i class="bi bi-exclamation-triangle"></i> Void Requests
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.php">Restaurant POS - Admin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <!-- Main content -->
-  <div class="main-content">
+      <div class="collapse navbar-collapse" id="adminNavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="process-void-requests.php">Process Void Requests</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
     <h2 class="mb-4">Process Void Requests</h2>
     
     <?php
@@ -352,7 +229,7 @@ log_activity('accessed admin dashboard');
         <?php endif; ?>
       </div>
     </div>
-  </div> <!-- End of main-content -->
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

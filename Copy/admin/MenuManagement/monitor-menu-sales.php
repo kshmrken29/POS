@@ -1,159 +1,62 @@
-<?php
-// Include authentication system
-require_once '../auth_session.php';
-require_admin();
-
-// Log that admin dashboard was accessed
-log_activity('accessed admin dashboard');
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Monitor Menu Sales</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     body {
       background-color: #f8f9fa;
     }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 100;
-      padding: 48px 0 0;
-      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-      background-color: #212529;
-    }
-    .sidebar-sticky {
-      height: calc(100vh - 48px);
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-    .sidebar .nav-link {
+    .nav-link {
       font-weight: 500;
-      color: #adb5bd;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.25rem;
-    }
-    .sidebar .nav-link:hover {
-      color: #fff;
-    }
-    .sidebar .nav-link.active {
-      color: #fff;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-left: 4px solid #0d6efd;
-    }
-    .sidebar .nav-link .bi {
-      margin-right: 0.5rem;
-    }
-    .sidebar-heading {
-      font-size: .75rem;
-      text-transform: uppercase;
-      padding: 1rem;
-      color: #6c757d;
     }
     .navbar-brand {
-      padding: 1rem;
       font-weight: bold;
-      color: white;
-      text-align: center;
-      display: block;
     }
-    .main-content {
-      margin-left: 300px;
-      padding: 20px;
+    .container {
+      margin-top: 50px;
     }
     .progress {
       height: 25px;
-    }
-    @media (max-width: 767.98px) {
-      .sidebar {
-        width: 100%;
-        position: relative;
-        padding-top: 0;
-      }
-      .main-content {
-        margin-left: 0;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar col-md-3 col-lg-2 d-md-block bg-dark">
-    <div class="position-sticky sidebar-sticky">
-      <a href="../dashboard.php" class="navbar-brand">Restaurant POS - Admin</a>
-      <hr class="bg-light">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="../dashboard.php">
-            <i class="bi bi-speedometer2"></i> Dashboard
-          </a>
-        </li>
-        <li class="sidebar-heading">Menu Management</li>
-        <li class="nav-item">
-          <a class="nav-link" href="input-daily-menu.php">
-            <i class="bi bi-plus-circle"></i> Input Daily Menu
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="edit-menu-details.php">
-            <i class="bi bi-pencil-square"></i> Edit Menu Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="monitor-menu-sales.php">
-            <i class="bi bi-graph-up"></i> Monitor Menu Sales
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="sales-reporting.php">
-            <i class="bi bi-file-earmark-bar-graph"></i> Sales Reporting
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="manage-cashier.php">
-            <i class="bi bi-person-badge"></i> Manage Cashier
-          </a>
-        </li>
-        <li class="sidebar-heading">Inventory</li>
-        <li class="nav-item">
-          <a class="nav-link" href="../InventoryManagement/input-purchase-details.php">
-            <i class="bi bi-cart-plus"></i> Purchase Details
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../InventoryManagement/input-daily-usage.php">
-            <i class="bi bi-card-checklist"></i> Daily Usage
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../InventoryManagement/remaining-stock-view.php">
-            <i class="bi bi-boxes"></i> Remaining Stock
-          </a>
-        </li>
-        
-        <li class="sidebar-heading">Administration</li>
-        <li class="nav-item">
-          <a class="nav-link" href="../process-void-requests.php">
-            <i class="bi bi-exclamation-triangle"></i> Void Requests
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../logout.php">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Restaurant POS - Admin</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <!-- Main content -->
-  <div class="main-content">
+      <div class="collapse navbar-collapse" id="adminNavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.php">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="input-daily-menu.php">Input Daily Menu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="edit-menu-details.php">Edit Menu Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="monitor-menu-sales.php">Monitor Menu Sales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sales-reporting.php">Sales Reporting</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="manage-cashier.php">Manage Cashier</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
     <h2 class="mb-4">Monitor Menu Sales</h2>
     
     <?php
@@ -164,14 +67,88 @@ log_activity('accessed admin dashboard');
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_sales'])) {
         $menu_id = $_POST['menu_id'];
         $servings_sold = $_POST['servings_sold'];
+        $previous_servings_sold = $_POST['previous_servings_sold'];
         
-        // Update the servings sold
-        $sql = "UPDATE menu_items SET servings_sold = '$servings_sold' WHERE id = $menu_id";
+        // Calculate the difference in servings sold
+        $servings_difference = $servings_sold - $previous_servings_sold;
+        
+        // Begin transaction
+        mysqli_begin_transaction($conn);
+        
+        try {
+            // Update the servings sold
+            $sql = "UPDATE menu_items SET servings_sold = '$servings_sold' WHERE id = $menu_id";
+                    
+            if (mysqli_query($conn, $sql)) {
+                // Only process inventory updates if there's a change in servings
+                if ($servings_difference != 0) {
+                    // Get all inventory items associated with this menu item
+                    $inventory_sql = "SELECT inventory_item_id, quantity_per_serving 
+                                     FROM menu_inventory_mapping 
+                                     WHERE menu_item_id = $menu_id";
+                    $inventory_result = mysqli_query($conn, $inventory_sql);
+                    
+                    if ($inventory_result && mysqli_num_rows($inventory_result) > 0) {
+                        $date_used = date('Y-m-d');
+                        
+                        while ($item = mysqli_fetch_assoc($inventory_result)) {
+                            $inventory_item_id = $item['inventory_item_id'];
+                            // Calculate total inventory used based on servings difference
+                            $total_quantity_used = $item['quantity_per_serving'] * $servings_difference;
+                            
+                            // Only update if there's actually inventory used
+                            if ($total_quantity_used != 0) {
+                                // If servings_difference is positive, we need to decrease inventory
+                                if ($servings_difference > 0) {
+                                    // Record usage in inventory_usage table
+                                    $usage_sql = "INSERT INTO inventory_usage (item_id, quantity_used, date_used) 
+                                                VALUES ($inventory_item_id, $total_quantity_used, '$date_used')";
+                                    
+                                    if (!mysqli_query($conn, $usage_sql)) {
+                                        throw new Exception("Error recording inventory usage: " . mysqli_error($conn));
+                                    }
+                                    
+                                    // Update current stock in inventory_items
+                                    $update_stock = "UPDATE inventory_items 
+                                                    SET current_stock = current_stock - $total_quantity_used 
+                                                    WHERE id = $inventory_item_id";
+                                    
+                                    if (!mysqli_query($conn, $update_stock)) {
+                                        throw new Exception("Error updating inventory stock: " . mysqli_error($conn));
+                                    }
+                                } else {
+                                    // If servings_difference is negative, we're returning inventory
+                                    // Add a "return" record to inventory_usage 
+                                    $abs_quantity = abs($total_quantity_used);
+                                    $usage_sql = "INSERT INTO inventory_usage (item_id, quantity_used, date_used, notes) 
+                                                VALUES ($inventory_item_id, -$abs_quantity, '$date_used', 'Return from sales adjustment')";
+                                    
+                                    if (!mysqli_query($conn, $usage_sql)) {
+                                        throw new Exception("Error recording inventory return: " . mysqli_error($conn));
+                                    }
+                                    
+                                    // Update current stock in inventory_items
+                                    $update_stock = "UPDATE inventory_items 
+                                                    SET current_stock = current_stock - $total_quantity_used 
+                                                    WHERE id = $inventory_item_id";
+                                    
+                                    if (!mysqli_query($conn, $update_stock)) {
+                                        throw new Exception("Error updating inventory stock: " . mysqli_error($conn));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 
-        if (mysqli_query($conn, $sql)) {
-            echo '<div class="alert alert-success" role="alert">Sales data updated successfully!</div>';
-        } else {
-            echo '<div class="alert alert-danger" role="alert">Error updating sales data: ' . mysqli_error($conn) . '</div>';
+                mysqli_commit($conn);
+                echo '<div class="alert alert-success" role="alert">Sales data updated successfully!</div>';
+            } else {
+                throw new Exception("Error updating sales data: " . mysqli_error($conn));
+            }
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            echo '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
         }
     }
     
@@ -218,7 +195,6 @@ log_activity('accessed admin dashboard');
                                 $percentSold = ($item['number_of_servings'] > 0) ? 
                                     ($item['servings_sold'] / $item['number_of_servings']) * 100 : 0;
                                 $actualSales = $item['servings_sold'] * $item['price_per_serve'];
-                                $servingsAvailable = $item['number_of_servings'] - $item['servings_sold'];
                                 
                                 // Determine progress bar color
                                 $progressClass = "bg-primary";
@@ -235,9 +211,9 @@ log_activity('accessed admin dashboard');
                                 echo '<tr>
                                         <td>' . $item['menu_name'] . '</td>
                                         <td>' . $item['date_added'] . '</td>
-                                        <td>' . $servingsAvailable . '</td>
+                                        <td>' . $item['number_of_servings'] . '</td>
                                         <td>' . $item['servings_sold'] . '</td>
-                                        <td>₱' . number_format($actualSales, 2) . '</td>
+                                        <td>$' . number_format($actualSales, 2) . '</td>
                                         <td>
                                             <div class="progress">
                                                 <div class="progress-bar ' . $progressClass . '" role="progressbar" 
@@ -279,11 +255,11 @@ log_activity('accessed admin dashboard');
                             </tr>
                             <tr>
                                 <th>Approximate Cost:</th>
-                                <td>₱<?php echo number_format($selectedMenuItem['approximate_cost'], 2); ?></td>
+                                <td>$<?php echo number_format($selectedMenuItem['approximate_cost'], 2); ?></td>
                             </tr>
                             <tr>
                                 <th>Price Per Serve:</th>
-                                <td>₱<?php echo number_format($selectedMenuItem['price_per_serve'], 2); ?></td>
+                                <td>$<?php echo number_format($selectedMenuItem['price_per_serve'], 2); ?></td>
                             </tr>
                             <tr>
                                 <th>Total Servings:</th>
@@ -304,11 +280,11 @@ log_activity('accessed admin dashboard');
                         <table class="table">
                             <tr>
                                 <th>Expected Sales:</th>
-                                <td>₱<?php echo number_format($selectedMenuItem['expected_sales'], 2); ?></td>
+                                <td>$<?php echo number_format($selectedMenuItem['expected_sales'], 2); ?></td>
                             </tr>
                             <tr>
                                 <th>Actual Sales:</th>
-                                <td>₱<?php echo number_format($selectedMenuItem['servings_sold'] * $selectedMenuItem['price_per_serve'], 2); ?></td>
+                                <td>$<?php echo number_format($selectedMenuItem['servings_sold'] * $selectedMenuItem['price_per_serve'], 2); ?></td>
                             </tr>
                             <tr>
                                 <th>Sales Progress:</th>
@@ -325,6 +301,7 @@ log_activity('accessed admin dashboard');
                         <h5 class="mt-4">Update Sales Data</h5>
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . '?menu_id=' . $selectedMenuItem['id']); ?>">
                             <input type="hidden" name="menu_id" value="<?php echo $selectedMenuItem['id']; ?>">
+                            <input type="hidden" name="previous_servings_sold" value="<?php echo $selectedMenuItem['servings_sold']; ?>">
                             <div class="mb-3">
                                 <label for="servings_sold" class="form-label">Servings Sold</label>
                                 <input type="number" class="form-control" id="servings_sold" name="servings_sold" 
@@ -339,7 +316,7 @@ log_activity('accessed admin dashboard');
         </div>
     <?php endif; ?>
     
-  </div> <!-- End of main-content -->
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

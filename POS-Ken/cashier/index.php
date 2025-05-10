@@ -12,81 +12,131 @@ log_activity('accessed cashier dashboard');
   <meta charset="UTF-8">
   <title>Cashier Dashboard</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
-    body {
+  body {
       background-color: #f8f9fa;
     }
-    .nav-link {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      padding: 48px 0 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      background-color: #212529;
+    }
+    .sidebar-sticky {
+      height: calc(100vh - 48px);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .sidebar .nav-link {
       font-weight: 500;
+      color: #adb5bd;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .sidebar .nav-link:hover {
+      color: #fff;
+    }
+    .sidebar .nav-link.active {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid #0d6efd;
+    }
+    .sidebar .nav-link .bi {
+      margin-right: 0.5rem;
+    }
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+      padding: 1rem;
+      color: #6c757d;
     }
     .navbar-brand {
+      padding: 1rem;
       font-weight: bold;
-    }
-    .container {
-      margin-top: 50px;
-    }
-    .feature-card {
-      transition: transform 0.3s ease;
-      margin-bottom: 20px;
-    }
-    .feature-card:hover {
-      transform: translateY(-5px);
-    }
-    .card-icon {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: #0d6efd;
-    }
-    .user-info {
       color: white;
-      margin-right: 15px;
+      text-align: center;
+      display: block;
+    }
+    .main-content {
+      margin-left: 300px;
+      padding: 20px;
+    }
+    @media (max-width: 767.98px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        padding-top: 0;
+      }
+      .main-content {
+        margin-left: 0;
+      }
     }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Restaurant POS - Cashier</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#cashierNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Sidebar -->
+  <div class="sidebar col-md-3 col-lg-2 d-md-block">
+    <div class="position-sticky sidebar-sticky">
+      <a href="index.php" class="navbar-brand">Restaurant POS - Cashier</a>
+      <hr class="bg-light">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.php">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+        <li class="sidebar-heading">Transactions</li>
+        <li class="nav-item">
+          <a class="nav-link" href="take-customer-order.php">
+            <i class="bi bi-cart-plus"></i> Take Order
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="view-transactions.php">
+            <i class="bi bi-search"></i> View Transactions
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="void-transaction.php">
+            <i class="bi bi-x-circle"></i> Void Transaction
+          </a>
+        </li>
+        <?php if (is_admin()): ?>
+        <li class="sidebar-heading">Administration</li>
+        <li class="nav-item">
+          <a class="nav-link" href="../admin/dashboard.php">
+            <i class="bi bi-gear"></i> Admin Panel
+          </a>
+        </li>
+        <?php endif; ?>
+        <li class="sidebar-heading">Account</li>
+        <li class="nav-item">
+          <a class="nav-link" href="../logout.php">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-      <div class="collapse navbar-collapse" id="cashierNavbar">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.php">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="take-customer-order.php">Take Order</a>
-          </li>
-          <?php if (is_admin()): ?>
-          <li class="nav-item">
-            <a class="nav-link" href="../admin/index.php">Admin Panel</a>
-          </li>
-          <?php endif; ?>
-          <!-- User account dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-              <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($_SESSION['username']); ?>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <?php if (is_admin()): ?>
-              <li><a class="dropdown-item" href="../admin/index.php">Switch to Admin</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <?php endif; ?>
-              <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-            </ul>
-          </li>
-        </ul>
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Cashier Dashboard</h1>
+      <div class="user-badge">
+        <span class="badge bg-primary">
+          <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($_SESSION['username']); ?>
+        </span>
       </div>
     </div>
-  </nav>
-
-  <div class="container">
-    <h1 class="mb-4 text-center">Restaurant POS Cashier Dashboard</h1>
-    <p class="text-center mb-5">Welcome to the Restaurant Point of Sale Cashier Dashboard. Use the features below to process customer orders.</p>
+    
+    <p class="text-muted mb-5">Welcome to the Restaurant Point of Sale Cashier Dashboard. Use the features below to process customer orders.</p>
     
     <!-- User welcome message -->
     <div class="alert alert-info mb-4">
@@ -143,9 +193,7 @@ log_activity('accessed cashier dashboard');
         </div>
       </div>
     </div>
-    
-   
-  </div>
+  </div> <!-- End of main-content -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
