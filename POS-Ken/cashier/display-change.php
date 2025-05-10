@@ -16,6 +16,9 @@ log_activity('accessed display change page');
   <style>
     body {
       background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
     .sidebar {
       position: fixed;
@@ -26,9 +29,10 @@ log_activity('accessed display change page');
       padding: 48px 0 0;
       box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color: #212529;
+      width: 250px;
     }
     .sidebar-sticky {
-      height: calc(100vh - 48px);
+      height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -63,55 +67,48 @@ log_activity('accessed display change page');
       display: block;
     }
     .main-content {
-      margin-left: 300px;
+      margin-left: 250px;
       padding: 20px;
+      width: calc(100% - 250px);
     }
     @media (max-width: 767.98px) {
       .sidebar {
         width: 100%;
+        height: auto;
         position: relative;
         padding-top: 0;
       }
       .main-content {
         margin-left: 0;
+        width: 100%;
       }
     }
-    .receipt {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    .receipt-header {
-      text-align: center;
+    .feature-card {
+      transition: transform 0.3s ease;
       margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px dashed #ddd;
+      height: 100%;
     }
-    .receipt-footer {
-      text-align: center;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px dashed #ddd;
+    .feature-card:hover {
+      transform: translateY(-5px);
     }
-    .change-highlight {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #198754;
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #0d6efd;
     }
-    @media print {
-      .no-print {
-        display: none !important;
-      }
-      body {
-        background-color: white;
-      }
-      .receipt {
-        box-shadow: none;
-        max-width: 100%;
-      }
+    .user-info {
+      color: white;
+      margin-right: 15px;
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-text {
+      flex-grow: 1;
+    }
+    .row {
+      width: 100%;
     }
   </style>
 </head>

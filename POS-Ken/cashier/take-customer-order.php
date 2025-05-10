@@ -16,6 +16,9 @@ log_activity('accessed take customer order page');
   <style>
     body {
       background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
     .sidebar {
       position: fixed;
@@ -26,9 +29,10 @@ log_activity('accessed take customer order page');
       padding: 48px 0 0;
       box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color: #212529;
+      width: 250px;
     }
     .sidebar-sticky {
-      height: calc(100vh - 48px);
+      height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -63,45 +67,48 @@ log_activity('accessed take customer order page');
       display: block;
     }
     .main-content {
-      margin-left: 300px;
+      margin-left: 250px;
       padding: 20px;
+      width: calc(100% - 250px);
     }
     @media (max-width: 767.98px) {
       .sidebar {
         width: 100%;
+        height: auto;
         position: relative;
         padding-top: 0;
       }
       .main-content {
         margin-left: 0;
+        width: 100%;
       }
     }
-    .menu-item {
-      cursor: pointer;
-      transition: all 0.2s;
+    .feature-card {
+      transition: transform 0.3s ease;
+      margin-bottom: 20px;
+      height: 100%;
     }
-    .menu-item:hover {
+    .feature-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
-    .menu-item.selected {
-      border: 2px solid #0d6efd;
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #0d6efd;
     }
-    .order-summary {
-      position: sticky;
-      top: 20px;
+    .user-info {
+      color: white;
+      margin-right: 15px;
     }
-    .item-qty-container {
-      position: relative;
+    .card-body {
+      display: flex;
+      flex-direction: column;
     }
-    .qty-hint {
-      position: absolute;
-      bottom: -20px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.75rem;
-      color: #6c757d;
+    .card-text {
+      flex-grow: 1;
+    }
+    .row {
+      width: 100%;
     }
   </style>
 </head>

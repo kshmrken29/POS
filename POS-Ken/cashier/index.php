@@ -14,8 +14,11 @@ log_activity('accessed cashier dashboard');
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
-  body {
+    body {
       background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
     .sidebar {
       position: fixed;
@@ -26,9 +29,10 @@ log_activity('accessed cashier dashboard');
       padding: 48px 0 0;
       box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
       background-color: #212529;
+      width: 250px;
     }
     .sidebar-sticky {
-      height: calc(100vh - 48px);
+      height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
     }
@@ -63,18 +67,48 @@ log_activity('accessed cashier dashboard');
       display: block;
     }
     .main-content {
-      margin-left: 300px;
+      margin-left: 250px;
       padding: 20px;
+      width: calc(100% - 250px);
     }
     @media (max-width: 767.98px) {
       .sidebar {
         width: 100%;
+        height: auto;
         position: relative;
         padding-top: 0;
       }
       .main-content {
         margin-left: 0;
+        width: 100%;
       }
+    }
+    .feature-card {
+      transition: transform 0.3s ease;
+      margin-bottom: 20px;
+      height: 100%;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #0d6efd;
+    }
+    .user-info {
+      color: white;
+      margin-right: 15px;
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-text {
+      flex-grow: 1;
+    }
+    .row {
+      width: 100%;
     }
   </style>
 </head>
